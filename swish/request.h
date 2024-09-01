@@ -24,7 +24,6 @@
  * SOFTWARE.
  * 
  */
-
 #include <cstring>
 
 #include <curl/curl.h>
@@ -76,16 +75,16 @@ struct CurlSListDeleter {
 };
 
 template <typename ByteType = char,
-          typename ByteTraits = std::char_traits<ByteType>,
-          typename Allocator = std::allocator<ByteType>>
-class BasicRequestHeader {
- public:
-  using byte_type = ByteType;
-  using allocator_type = Allocator;
-  using byte_traits = ByteTraits;
-  using size_type = typename allocator_type::size_type;
-  using pointer = typename allocator_type::pointer;
-  using string_type = std::basic_string<byte_type, byte_traits, allocator_type>;
+    typename ByteTraits = std::char_traits<ByteType>,
+    typename Allocator = std::allocator<ByteType>>
+    class BasicRequestHeader {
+    public:
+        using byte_type = ByteType;
+        using byte_traits = ByteTraits;
+        using allocator_type = Allocator;
+        using size_type = typename std::allocator_traits<allocator_type>::size_type;
+        using pointer = typename std::allocator_traits<allocator_type>::pointer;
+        using string_type = std::basic_string<byte_type, byte_traits, allocator_type>;
 
  private:
   std::unique_ptr<curl_slist, CurlSListDeleter> header_data_{nullptr};

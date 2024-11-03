@@ -66,6 +66,10 @@ class Client {
   Configuration configuration{};
 
   Client() : curl_handle_(curl_easy_init()) { assert(curl_handle_ != nullptr); }
+  // Set Unix domain socket path
+  void SetUnixSocketPath(const std::string& socket_path) {
+    curl_easy_setopt(curl_handle_, CURLOPT_UNIX_SOCKET_PATH, socket_path.c_str());
+  }
 
   /**
    * @brief Sends a POST request of Content-Type:

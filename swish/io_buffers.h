@@ -29,21 +29,23 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <cstddef>
+#include <memory>
 
 namespace swish {
 // internal use only
 
 // read only buffer
-template <typename ByteType = char,
-          typename ByteTraits = std::char_traits<ByteType>,
+template <typename ByteType = std::byte,
+          typename ByteTraits = std::char_traits<char>, // Default ByteTraits for char is used
           typename Allocator = std::allocator<ByteType>>
 class BasicResponseBuffer {
- public:
-  using byte_type = ByteType;
-  using byte_traits = ByteTraits;
-  using allocator_type = Allocator;
-  using size_type = typename allocator_type::size_type;
-  using pointer = typename allocator_type::pointer;
+public:
+    using byte_type = ByteType;
+    using byte_traits = ByteTraits;
+    using allocator_type = Allocator;
+    using size_type = typename std::allocator_traits<allocator_type>::size_type;
+    using pointer = typename std::allocator_traits<allocator_type>::pointer;
 
  private:
   allocator_type allocator_{};
